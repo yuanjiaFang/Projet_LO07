@@ -53,6 +53,8 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
                     <th>Prénom</th>
                     <th>Admission</th>
                     <th>Filière</th>
+                    <th>Modification</th>
+                    <th>Suppression</th>
                 </tr>
         </thead>
 
@@ -68,6 +70,9 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
                     <td><?php echo $donnees['prenom'];?></td>
                     <td><?php echo $donnees['admission'];?></td>
                     <td><?php echo $donnees['filiere'];?></td>
+                    <td><a href="modifier_etudiant.php?id=<?php echo $donnees['num_carte'] ?>"> <img class='icon' src='images/icone_cree.png' alt='Modifier un étudiant' title='Modifier un étudiant' width='30' height='30'></a></td>
+                    <td><a href="supprimer_etudiant.php?id=<?php echo $donnees['num_carte'] ?> "onclick="return confirm('Êtes-vous certains de vouloir supprimer cet étudiant ?');"> <img class='icon' src='images/icone_croix.png' alt='Supprimer un étudiant' title='Supprimer un étudiant' width='30' height='30'></a></td>
+                    
             </tr>
         <?php
                  }

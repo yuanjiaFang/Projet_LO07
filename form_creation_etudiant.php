@@ -19,15 +19,15 @@ require 'fonctions_structure_page.php';
   <form method ="post" action = "traitement_creation_etudiant.php">
       
       <label>Numéro de carte étudiante : </label>
-      <input type = "text" name ="num_etu"/>
+      <input type = "text" name ="num_etu" maxlength="5" minlength="5" pattern="\d*" required/>
       <p/>
             
       <label>Nom : </label>
-      <input type = "text" name ="nom"/>
+      <input type = "text" name ="nom"  pattern = "^[a-zA-Z]+$" required/>
       <p/>
       
       <label>Prénom : </label>
-      <input type = "text" name ="prenom"/>
+      <input type = "text" name ="prenom" pattern = "^[a-zA-Z]+$" required/>
       <p/>
       
       <label>Admission : </label>
@@ -46,6 +46,7 @@ require 'fonctions_structure_page.php';
                 <option value="LIB">LIB</option>
       </select>
       <p/>
+
       
       
       <input type="submit" value ="Envoyer"/>    
