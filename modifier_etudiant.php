@@ -31,6 +31,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
        ?>
     </header>  
   <!--==============================content================================-->
+  <div class ='content'>
   <form method ="post" action = "traitement_modifier_etudiant.php?id=<?php echo $etudiant->getNumEtu() ?>">
       
       <label>Numéro de carte étudiante : </label>
@@ -69,6 +70,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
       <input type="submit" value ="Modifier"/>    
       
   </form>
+  </div>
 <!--==============================footer=================================-->
   <?php 
        getFooter();

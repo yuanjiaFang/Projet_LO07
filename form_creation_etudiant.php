@@ -16,6 +16,7 @@ require 'fonctions_structure_page.php';
        ?>
     </header>  
   <!--==============================content================================-->
+  <div class ='content'>
   <form method ="post" action = "traitement_creation_etudiant.php">
       
       <label>Numéro de carte étudiante : </label>
@@ -53,6 +54,7 @@ require 'fonctions_structure_page.php';
       <input type="reset" value ="Rénitialiser"/>
       
   </form>
+  </div>
 <!--==============================footer=================================-->
   <?php 
        getFooter();
