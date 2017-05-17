@@ -53,7 +53,7 @@ class ElementFormationManager
             $q2->execute();
 
             if($this->db->affected_rows > 0){
-                header('Location: modifier_cursus.php?id='.$num_etu);
+                echo "SUCCESS";
             }else{
                 echo "ERREUR INSERTION LIEN ETUDIANT ET ELEMENT FORMATION";
             }
@@ -82,7 +82,7 @@ class ElementFormationManager
 
         while ($donnees = mysqli_fetch_assoc($q))
         {
-            $liste_element_formation[] = new ElementFormation($donnees['num_element'], $donnees['sem_seq'], $donnees['sem_label'], $donnees['sigle'], $donnees['categorie'], $donnees['affectation'], $donnees['utt'], $donnees['profil'], $donnees['credit'], $donnees['resultat']);
+            $liste_element_formation[] = new ElementFormation($donnees['sem_seq'], $donnees['sem_label'], $donnees['sigle'], $donnees['categorie'], $donnees['affectation'], $donnees['utt'], $donnees['profil'], $donnees['credit'], $donnees['resultat']);
         }
 
         return $liste_element_formation;
@@ -90,10 +90,14 @@ class ElementFormationManager
     }
     
     public function addAllElementFormationEtudiant($tabElementFormation, Etudiant $e){
+        $num_etu = $e->getNumEtu();
         foreach($tabElementFormation as $index => $elementFormation){
             $elementFormationObject = new ElementFormation($elementFormation[0], $elementFormation[1], $elementFormation[2], $elementFormation[3], $elementFormation[4], $elementFormation[5], $elementFormation[8], $elementFormation[6], $elementFormation[7]);
             $this->addElementFormationEtudiant($elementFormationObject, $e);
         }
+
+        header('Location: modifier_cursus.php?id='.$num_etu);
+
     }
 
 

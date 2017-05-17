@@ -93,7 +93,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
           </div>
           <img class='add_field_button' src='images/icone_ajouter.png' alt='Ajouter un élément de formation' title='Ajouter un élément de formation' width='30' height='30'>
           <br>
-          <input type="submit" value ="Modifier les informations"/>
+          <input type="submit" value ="Ajouter des cursus"/>
       </form>
       </div>
 

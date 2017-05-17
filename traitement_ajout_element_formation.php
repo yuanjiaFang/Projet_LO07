@@ -50,6 +50,7 @@ for($i = 0 ; $i < $nb_element ; $i++) {
     $elementFormation[] = "Y";
 
     $tabElementFormation[$i] = $elementFormation;
+    //On revide le tableau pour l'élément suivant
     $elementFormation = [];
     var_dump($tabElementFormation);
     echo "<br>";
