@@ -11,6 +11,7 @@ if ($mysqli->connect_error) {
 }
 
 $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
+
 ?>
 
 

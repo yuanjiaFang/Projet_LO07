@@ -45,6 +45,22 @@
         echo "</footer>";
         
     }
+
+    function getInputText($nameLabel, $label, $inputName){
+        echo "<label name = '$nameLabel'>$label</label>";
+        echo "<input type = 'text' name = '$inputName' required/><br>";
+    }
+
+    function getSelect($tabOptn, $name, $label){
+        echo "<label>$label </label>";
+        echo "<select name = '$name'>";
+        foreach($tabOptn as $value => $option){
+            echo "<option value='$value'>$option</option>";
+        }
+        echo "</select><br>";
+    }
+
+
     
     
     

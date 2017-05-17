@@ -19,14 +19,17 @@ class EtudiantsManager{
   public function addEtu(Etudiant $etu)
   {
     $q = $this->db->prepare('INSERT INTO etudiant(num_carte, nom, prenom, admission, filiere) VALUES(?, ?, ?, ?, ?)');
-    
+
+      $num_carte = $etu->getNumEtu();
+      $nom = $etu->getNom();
+      $prenom = $etu->getPrenom();
+      $admission = $etu->getAdmission();
+      $filiere = $etu->getFiliere();
+
+
     $q->bind_param('dssss', $num_carte, $nom, $prenom, $admission, $filiere);
     
-    $num_carte = $etu->getNumEtu();
-    $nom = $etu->getNom();
-    $prenom = $etu->getPrenom();
-    $admission = $etu->getAdmission();
-    $filiere = $etu->getFiliere();
+
     $q->execute();
     
     if($this->db->affected_rows > 0){
@@ -80,15 +83,16 @@ class EtudiantsManager{
   {
     $q = $this->db->prepare('UPDATE etudiant SET nom = ?, prenom = ?, admission = ?, filiere = ? WHERE num_carte = ?');
 
-    
+      $nom = $etu->getNom();
+      $prenom = $etu->getPrenom();
+      $admission = $etu->getAdmission();
+      $filiere = $etu->getFiliere();
+      $num_carte = $etu->getNumEtu();
+
     $q->bind_param('ssssd', $nom, $prenom, $admission, $filiere, $num_carte);
     
     
-    $nom = $etu->getNom();
-    $prenom = $etu->getPrenom();
-    $admission = $etu->getAdmission();
-    $filiere = $etu->getFiliere();
-    $num_carte = $etu->getNumEtu();
+
     
     $q->execute();
     
