@@ -22,7 +22,7 @@ class ElementFormation{
     
     
     
-    function __construct($sem_seq, $sem_label, $sigle, $categorie, $affectation, $utt, $profil, $credit, $resultat) {
+    public function __construct($sem_seq, $sem_label, $sigle, $categorie, $affectation, $utt, $profil, $credit, $resultat) {
 
         $this->sem_seq = $sem_seq;
         $this->sem_label = $sem_label;

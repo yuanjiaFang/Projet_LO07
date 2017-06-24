@@ -47,6 +47,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
     <?php echo "Admis en ".$etudiant->getAdmission()." et actuellement en filière ".$etudiant->getFiliere()."<br>"; ?>
 
 
+
     <!-- Affichage du cursus de l'étudiant -->
     <?php
     //Récupération de la liste d'élément de formation
@@ -54,6 +55,31 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
     $liste_element_formation_by_semester = $managerElementFormation->getListElementFormationBySemester($liste_element_formation);
 
+    //Cacul CS + TM de TCBR
+    function getCstm_tcbr($listElement){
+        $cstm_tcbr = 0;
+        foreach($listElement as $elem){
+            if ($elem->getAffectation() == "TCBR"){
+                if ($elem->getCategorie() == "CS" ||"TM"){
+                    $cstm_tcbr += $elem->getCredit();
+                }
+            }
+        }
+        return $cstm_tcbr;
+    }
+
+    //Calcul CS + TM de FCBR
+    function getCstm_fcbr($listElement) {
+        $cstm_fcbr = 0;
+        foreach($listElement as $elem) {
+            if ($elem->getAffectation() == "FCBR"){
+                if ($elem->getCategorie() == "CS" ||"TM"){
+                    $cstm_fcbr += $elem->getCredit();
+                }
+            }
+        }
+        return $cstm_fcbr;
+    }
 
     echo "<ul>";
     foreach($liste_element_formation_by_semester as $labelSemestre => $elementFormations){
@@ -61,7 +87,6 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
         echo "<li>".$labelSemestre;
         echo "<ul>";
-       
 
 
         foreach ($elementFormations as $elementFormation){
@@ -72,8 +97,20 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
         echo "</ul>";
         echo "</li>";
 
+
     }
+    echo "<li> Total";
+    echo "<ul>";
+
+    echo "<li> TCBR: CS + TM --- ".getCstm_tcbr($liste_element_formation)."</li>";
+    echo "<li> FCBR: CS + TM --- ".getCstm_fcbr($liste_element_formation)."</li>";
+
+
     echo "</ul>";
+    echo "</li>";
+    echo "</ul>";
+
+
 
 
     ?>
