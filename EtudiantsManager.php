@@ -50,8 +50,22 @@ class EtudiantsManager{
 
   public function deleteEtu(Etudiant $etu)
   {
-    $this->db->query('DELETE FROM etudiant WHERE num_carte = '.$etu->getNumEtu());
-    return ($this->db->affected_rows > 0);
+      //Selection des elements de formation de l'étudiant
+      $selectElement = $this->db->query('SELECT element_formation FROM cursus WHERE num_etudiant = '.$etu->getNumEtu());
+      while ($donnees=mysqli_fetch_array($selectElement)){
+
+          $elementASupprime[] = $donnees['element_formation'];
+      }
+
+      //Suppression des cursus
+      $this->db->query('DELETE FROM cursus WHERE num_etudiant = '.$etu->getNumEtu());
+      //Suppression des éléments formations
+      foreach($elementASupprime as $suppression){
+          $this->db->query('DELETE FROM element_formation WHERE num_element = '.$suppression);
+      }
+      //Suppression de l'étudiant
+      $this->db->query('DELETE FROM etudiant WHERE num_carte = '.$etu->getNumEtu());
+      return ($this->db->affected_rows > 0);
   }
 
   public function getEtu($id)

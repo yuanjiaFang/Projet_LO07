@@ -29,7 +29,16 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
     </header>  
   <!--==============================content================================-->
     <div class="content">
-   <?php
+
+        <form method="POST" action="import_csv.php" enctype="multipart/form-data">
+        <label>Importation avec un fichier CSV : </label>
+        <input type="file" name="csvimport">
+        <input type="submit" name="envoyer" value="Importer le CSV">
+        </form>
+
+
+
+        <?php
     if (mysqli_num_rows($liste_etudiant) > 0){
     ?>
    <table border="1" cellspacing ="2" cellpadding="5">
@@ -39,6 +48,7 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
            <th>Étudiants</th>
            <th>Modification du cursus</th>
            <th>Affichage du cursus</th>
+           <th>Export en CSV</th>
        </tr>
        </thead>
 
@@ -52,6 +62,7 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
                 <td align="center"><?php echo $donnees['nom']." ".$donnees['prenom'];?></td>
                 <td align="center"><a href="modifier_cursus.php?id=<?php echo $donnees['num_carte'];?>"> <img class='icon' src='images/icone_cree.png' alt='Modifier un cursus' title='Modifier un cursus' width='30' height='30'></a></td>
                 <td align="center"><a href="afficher_etudiant.php?id=<?php echo $donnees['num_carte']; ?>"> <img class='icon' src='images/icone_liste.png' alt='Afficher un cursus' title='Afficher un cursus' width='30' height='30'></a></td>
+                <td align="center"><a href="export_csv.php?id=<?php echo $donnees['num_carte']; ?>"> <img class='icon' src='images/csv_icone.png' alt='Exporter un cursus' title='Exporter un cursus' width='30' height='30'></a></td>
             </tr>
 
 

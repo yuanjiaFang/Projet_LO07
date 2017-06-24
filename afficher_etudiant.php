@@ -61,7 +61,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
         echo "<li>".$labelSemestre;
         echo "<ul>";
-        echo "<table border='1' cellspacing ='2' cellpadding='5'>";
+       
 
 
         foreach ($elementFormations as $elementFormation){
