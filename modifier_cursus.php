@@ -39,7 +39,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
                 e.preventDefault();
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
-                    $(wrapper).append("<?php getFormElementFormation($num_etu, true)?>"); //add input box
+                    $(wrapper).append("<?php getFormElementFormation(true)?>"); //Ajout de formulaire lors du clique
                 }
             });
 
@@ -88,7 +88,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
       <div class = 'element_formation'>
       <form method ='post' action = 'traitement_ajout_element_formation.php?id=<?php echo $num_etu; ?>'>
           <br>
-          <?php getFormElementFormation($num_etu)?>
+          <?php getFormElementFormation()?>
           <div class="input_fields_wrap">
           </div>
           <img class='add_field_button' src='images/icone_ajouter.png' alt='Ajouter un élément de formation' title='Ajouter un élément de formation' width='30' height='30'>

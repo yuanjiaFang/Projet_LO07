@@ -67,6 +67,7 @@ class ElementFormationManager
 
     public function deleteElementFormation(ElementFormation $e)
     {
+        $this->db->query('DELETE FROM cursus WHERE element_formation = '.$e->getNum_element());
         $this->db->query('DELETE FROM element_formation WHERE num_element = '.$e->getNum_element());
         return ($this->db->affected_rows > 0);
     }
@@ -78,7 +79,7 @@ class ElementFormationManager
         $liste_element_formation = [];
 
         $num_etu = $etu->getNumEtu();
-        $q = $this->db->query('SELECT * FROM element_formation e, cursus c WHERE e.num_element = c.element_formation AND c.num_etudiant = '.$num_etu);
+        $q = $this->db->query('SELECT * FROM element_formation e, cursus c WHERE e.num_element = c.element_formation AND c.num_etudiant = '.$num_etu.' ORDER BY e.sem_seq, e.categorie');
 
         while ($donnees = mysqli_fetch_assoc($q))
         {
@@ -99,6 +100,21 @@ class ElementFormationManager
         header('Location: modifier_cursus.php?id='.$num_etu);
 
     }
+
+    public function getListElementFormationBySemester($liste_element_formation){
+
+        $liste = [];
+
+        foreach($liste_element_formation as $element_formation){
+                $label_semestre = $element_formation->getSem_label();
+                $liste[$label_semestre][] = $element_formation;
+        }
+
+        return $liste;
+
+    }
+
+
 
 
 

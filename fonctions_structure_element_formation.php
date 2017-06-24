@@ -4,7 +4,7 @@
 
 
 
-function getFormElementFormation($id_etu, $supp = false){
+function getFormElementFormation($supp = false){
 
     $tabYesNo = ["Y" => "Oui", "N" => "Non"];
     $tabCategorie = ["CS" => "CS", "TM" => "TM", "EC" => "EC", "HT" => "HT", "ME" => "ME", "ST" => "ST", "SE" => "SE", "HP" => "HP", "NPML" => "NPML" ];
