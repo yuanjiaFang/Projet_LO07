@@ -1,4 +1,5 @@
 <?php
+include_once("connexion/fonction_connexion.php");
 include_once("CelementFormation.php");
 
 /**
@@ -65,13 +66,20 @@ class ElementFormationManager
     }
 
 
-    public function deleteElementFormation(ElementFormation $e)
+    public function deleteElementFormation($id_element)
     {
-        $this->db->query('DELETE FROM cursus WHERE element_formation = '.$e->getNum_element());
-        $this->db->query('DELETE FROM element_formation WHERE num_element = '.$e->getNum_element());
+        $this->db->query('DELETE FROM cursus WHERE element_formation = '.$id_element);
+        $this->db->query('DELETE FROM element_formation WHERE num_element = '.$id_element);
         return ($this->db->affected_rows > 0);
     }
 
+    public function getElementFormation($id_element){
+        $q = $this->db->query('SELECT * FROM element_formation e WHERE e.num_element = '.$id_element);
+        $donnees = mysqli_fetch_assoc($q);
+        
+        return new ElementFormation($donnees['sem_seq'], $donnees['sem_label'], $donnees['sigle'], $donnees['categorie'], $donnees['affectation'], $donnees['utt'], $donnees['profil'], $donnees['credit'], $donnees['resultat'], $donnees['num_element']);
+
+    }
 
 
     public function getListElementFormation(Etudiant $etu)
@@ -83,17 +91,17 @@ class ElementFormationManager
 
         while ($donnees = mysqli_fetch_assoc($q))
         {
-            $liste_element_formation[] = new ElementFormation($donnees['sem_seq'], $donnees['sem_label'], $donnees['sigle'], $donnees['categorie'], $donnees['affectation'], $donnees['utt'], $donnees['profil'], $donnees['credit'], $donnees['resultat']);
+            $liste_element_formation[] = new ElementFormation($donnees['sem_seq'], $donnees['sem_label'], $donnees['sigle'], $donnees['categorie'], $donnees['affectation'], $donnees['utt'], $donnees['profil'], $donnees['credit'], $donnees['resultat'], $donnees['num_element']);
         }
 
         return $liste_element_formation;
 
     }
-    
+
     public function addAllElementFormationEtudiant($tabElementFormation, Etudiant $e){
         $num_etu = $e->getNumEtu();
         foreach($tabElementFormation as $index => $elementFormation){
-            $elementFormationObject = new ElementFormation($elementFormation[0], $elementFormation[1], $elementFormation[2], $elementFormation[3], $elementFormation[4], $elementFormation[5], $elementFormation[8], $elementFormation[6], $elementFormation[7]);
+            $elementFormationObject = new ElementFormation($elementFormation[0], $elementFormation[1], $elementFormation[2], $elementFormation[3], $elementFormation[4], $elementFormation[5], $elementFormation[8], $elementFormation[6], $elementFormation[7], 0);
             $this->addElementFormationEtudiant($elementFormationObject, $e);
         }
 
@@ -111,6 +119,37 @@ class ElementFormationManager
         }
 
         return $liste;
+
+    }
+
+    public function update(ElementFormation $e)
+    {
+        $q = $this->db->prepare('UPDATE element_formation SET sem_seq = ?, sem_label = ?, sigle = ?, categorie = ?, affectation = ?, utt = ?, profil = ?, credit = ?, resultat = ? WHERE num_element = ?');
+
+        $sem_seq = $e->getSem_seq();
+        $sem_label = $e->getSem_label();
+        $sigle = $e->getSigle();
+        $categorie = $e->getCategorie();
+        $affectation = $e->getAffectation();
+        $utt = $e->getUtt();
+        $profil = $e->getProfil();
+        $credit = $e->getCredit();
+        $resultat = $e->getResultat();
+        $num_element = $e->getIdElement();
+
+
+        $q->bind_param('sssssssdsd', $sem_seq, $sem_label, $sigle, $categorie, $affectation, $utt, $profil, $credit, $resultat, $num_element);
+
+
+
+
+        $q->execute();
+
+        if($this->db->affected_rows > 0){
+            echo $e."a bien été modifié avec succès";
+        }else{
+            echo "ERREUR MODIFICATION ELEMENT DE FORMATION";
+        }
 
     }
 

@@ -15,6 +15,8 @@ if ($mysqli->connect_error) {
 $managerEtudiant = new EtudiantsManager($mysqli);
 $etudiant = $managerEtudiant->getEtu($num_etu);
 
+
+
 ?>
 
 

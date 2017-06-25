@@ -89,6 +89,7 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
         echo "<ul>";
 
 
+
         foreach ($elementFormations as $elementFormation){
 
             echo "<li>".$elementFormation->getSigle()." ".$elementFormation->getResultat()." ".$elementFormation->getCredit()."</li>";

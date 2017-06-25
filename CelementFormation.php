@@ -17,12 +17,13 @@ class ElementFormation{
     private $profil;
     private $credit;
     private $resultat;
-    
-    
-    
-    
-    
-    public function __construct($sem_seq, $sem_label, $sigle, $categorie, $affectation, $utt, $profil, $credit, $resultat) {
+    private $id_element;
+
+
+
+
+
+    function __construct($sem_seq, $sem_label, $sigle, $categorie, $affectation, $utt, $profil, $credit, $resultat, $id_element) {
 
         $this->sem_seq = $sem_seq;
         $this->sem_label = $sem_label;
@@ -33,10 +34,11 @@ class ElementFormation{
         $this->profil = $profil;
         $this->credit = $credit;
         $this->resultat = $resultat;
+        $this->id_element = $id_element;
     }
 
 
-            
+
     function getSem_seq() {
         return $this->sem_seq;
     }
@@ -73,7 +75,12 @@ class ElementFormation{
         return $this->resultat;
     }
 
-        
+    function getIdElement() {
+        return $this->id_element;
+    }
+
+
+
     function setSem_seq($sem_seq) {
         $this->sem_seq = $sem_seq;
     }
@@ -110,16 +117,16 @@ class ElementFormation{
         $this->resultat = $resultat;
     }
 
-    
-    
+
+
     public function __toString() {
-        return "Élément de formation : ($this->sem_seq, $this->sem_label, $this->sigle, $this->categorie, $this->affectation, $this->utt, $this->profil, $this->credit, $this->resultat)<br>\n";
+        return "Élément de formation : ($this->sem_seq, $this->sem_label, $this->sigle, $this->categorie, $this->affectation, $this->utt, $this->profil, $this->credit, $this->resultat)";
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 }
 

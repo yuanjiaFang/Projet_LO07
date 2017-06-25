@@ -74,6 +74,12 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
               foreach($liste_element_formation as $element_formation){
                   echo $element_formation;
+
+                  echo "<a href='modifier_element_formation.php?id=".$element_formation->getIdElement()."&numEtu=".$num_etu."' > <img class='icon' src='images/icone_cree.png' alt='Modifier un élément' title='Modifier un élément' width='10' height='10'></a>";
+
+                  echo "<a href='supprimer_element_formation.php?id=".$element_formation->getIdElement()."&numEtu=".$num_etu."' > <img class='icon' src='images/icone_croix.png' alt='Supprimer un élément' title='Supprimer un élément' width='10' height='10'></a>";
+
+                  echo "<br>";
               }
 
 
