@@ -100,7 +100,7 @@ foreach($csv_lines as $lignes){
 
 foreach($ligne_element_formations as $element_formation){
     $donnees_element = explode(";", $element_formation);
-    $elementForm = new ElementFormation($donnees_element[1],$donnees_element[2],$donnees_element[3],$donnees_element[4],$donnees_element[5],$donnees_element[6],$donnees_element[7],$donnees_element[8],$donnees_element[9]);
+    $elementForm = new ElementFormation($donnees_element[1],$donnees_element[2],$donnees_element[3],$donnees_element[4],$donnees_element[5],$donnees_element[6],$donnees_element[7],$donnees_element[8],$donnees_element[9],0);
     $managerElementFormation->addElementFormationEtudiant($elementForm, $etudiant);
 }
 
