@@ -20,6 +20,14 @@ function getNumReglement($db){
 
 }
 
+function affiche_resultat($resultat, $seuil){
+    if($resultat >= $seuil){
+        echo "<img class='icon' src='images/valider.png' width='10' height='10'>";
+    }else{
+        echo "<img class='icon' src='images/non_valider.png' width='10' height='10'>";
+    }
+}
+
 function getListElementRegle($num_reglement,$db){
     $list_Element_Regle = array();
     $resultat = $db->query("select * from description_reglement d, element_regle e where d.reglement ='".$num_reglement."' and d.element_regle = e.num_element order by label_regle");
