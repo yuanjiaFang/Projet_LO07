@@ -3,7 +3,7 @@ require 'fonctions_structure_page.php';
 include_once('ElementFormationManager.php');
 include_once("connexion/fonction_connexion.php");
 include_once("EtudiantsManager.php");
-
+include_once ("traitement_regle.php");
 //Ouverture d'une nouvelle connexion à la base de données MySQL.
 $mysqli = connexion();
 
@@ -55,31 +55,10 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
     $liste_element_formation_by_semester = $managerElementFormation->getListElementFormationBySemester($liste_element_formation);
 
-    //Cacul CS + TM de TCBR
-    function getCstm_tcbr($listElement){
-        $cstm_tcbr = 0;
-        foreach($listElement as $elem){
-            if ($elem->getAffectation() == "TCBR"){
-                if ($elem->getCategorie() == "CS" ||"TM"){
-                    $cstm_tcbr += $elem->getCredit();
-                }
-            }
-        }
-        return $cstm_tcbr;
+    if(getNumReglement($mysqli) > 0) {
+        $list_element_regle = getListElementRegle(getNumReglement($mysqli), $mysqli);
     }
 
-    //Calcul CS + TM de FCBR
-    function getCstm_fcbr($listElement) {
-        $cstm_fcbr = 0;
-        foreach($listElement as $elem) {
-            if ($elem->getAffectation() == "FCBR"){
-                if ($elem->getCategorie() == "CS" ||"TM"){
-                    $cstm_fcbr += $elem->getCredit();
-                }
-            }
-        }
-        return $cstm_fcbr;
-    }
 
     echo "<ul>";
     foreach($liste_element_formation_by_semester as $labelSemestre => $elementFormations){
@@ -87,7 +66,6 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
         echo "<li>".$labelSemestre;
         echo "<ul>";
-
 
 
         foreach ($elementFormations as $elementFormation){
@@ -100,15 +78,99 @@ $etudiant = $managerEtudiant->getEtu($num_etu);
 
 
     }
-    echo "<li> Total";
-    echo "<ul>";
+    if(getNumReglement($mysqli) > 0) {
+        echo "<li> Total";
 
-    echo "<li> TCBR: CS + TM --- ".getCstm_tcbr($liste_element_formation)."</li>";
-    echo "<li> FCBR: CS + TM --- ".getCstm_fcbr($liste_element_formation)."</li>";
+        echo "<ul>";
 
 
-    echo "</ul>";
-    echo "</li>";
+        foreach ($list_element_regle as $elem) {
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'CS+TM' && $elem['etape'] == 'TCBR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCstm_tcbr($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'CS+TM' && $elem['etape'] == 'FCBR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCstm_fcbr($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'CS' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCs_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'TM' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getTm_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'CS+TM' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCstm_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'ST' && $elem['etape'] == 'TCBR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getSt_tcbr($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'ST' && $elem['etape'] == 'FCBR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getSt_fcbr($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'EC' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getEc_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'ME' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getMe_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'CT' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCt_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'ME+CT' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getMect_br($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == 'UTT(CS+TM)' && $elem['etape'] == 'BR') {
+                echo "<li>" . $elem['etape'] . ": " . $elem['cible_agregat'] . " --- " . getCstm_utt($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+            if ($elem['agregat'] == 'EXIST' && $elem['cible_agregat'] == 'SE') {
+                echo "<li> Semestre à l'étranger --- ";
+                if (getSe($liste_element_formation)) {
+                    echo "Validé";
+                } else {
+                    echo 'Non validé</li>';
+                };
+            }
+            if ($elem['agregat'] == 'EXIST' && $elem['cible_agregat'] == 'NPML') {
+                echo "<li> NPML --- ";
+                if (getNpml($liste_element_formation)) {
+                    echo "Validé";
+                } else {
+                    echo 'Non validé</li>';
+                };
+            }
+            if ($elem['agregat'] == 'SUM' && $elem['cible_agregat'] == '' && $elem['etape'] == 'ALL') {
+                echo "<li> All --- " . getAll($liste_element_formation) . "/" . $elem['seuil'] . "</li>";
+            }
+
+
+        }
+
+        /*echo "<li> TCBR: CS + TM --- ".getCstm_tcbr($liste_element_formation)."/".$list_element_regle[0]['seuil']."</li>";
+        echo "<li> FCBR: CS + TM --- ".getCstm_fcbr($liste_element_formation)."/".$list_element_regle[1]['seuil']."</li>";
+        echo "<li> BR: CS --- ".getCs_br($liste_element_formation)."/".$list_element_regle[2]['seuil']."</li>";
+        echo "<li> BR: TM --- ".getTm_br($liste_element_formation)."/".$list_element_regle[3]['seuil']."</li>";
+        echo "<li> TCBR: ST --- ".getSt_tcbr($liste_element_formation)."/".$list_element_regle[4]['seuil']."</li>";
+        echo "<li> FCBR: ST --- ".getSt_fcbr($liste_element_formation)."/".$list_element_regle[5]['seuil']."</li>";
+        echo "<li> BR: EC --- ".getEc_br($liste_element_formation)."/".$list_element_regle[6]['seuil']."</li>";
+        echo "<li> BR: ME --- ".getMe_br($liste_element_formation)."/".$list_element_regle[7]['seuil']."</li>";
+        echo "<li> BR: CT --- ".getCt_br($liste_element_formation)."/".$list_element_regle[8]['seuil']."</li>";
+        echo "<li> BR: ME + CT --- ".getMect_br($liste_element_formation)."/".$list_element_regle[9]['seuil']."</li>";
+        echo "<li> BR: CS + TM (UTT) --- ".getCstm_utt($liste_element_formation)."/".$list_element_regle[10]['seuil']."</li>";
+        echo "<li> Semestre à l'étranger --- ";
+        if(getSe($liste_element_formation))
+        {echo"Validé";}
+        else {echo 'Non validé</li>';};
+
+        echo "<li> NPML --- ";
+        if(getNpml($liste_element_formation))
+        {echo"Validé";}
+        else {echo 'Non validé</li>';};
+
+        echo "<li> All --- ".getAll($liste_element_formation)."/".$list_element_regle[13]['seuil']."</li>";
+        */
+        echo "</ul>";
+        echo "</li>";
+    }
     echo "</ul>";
 
 

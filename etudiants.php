@@ -20,6 +20,8 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
     <title>Étudiants</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <!-- Bootstrap
+    <link href="css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
    <header> 
@@ -44,7 +46,7 @@ $liste_etudiant = $mysqli->query("SELECT * FROM etudiant");
       
       
   
-    <table border="1" cellspacing ="2" cellpadding="5">
+    <table class = "table table-striped" border="1" cellspacing ="2" cellpadding="5">
         
         <thead>
                 <tr>

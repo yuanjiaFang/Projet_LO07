@@ -6,7 +6,7 @@
          echo "<div>";
             echo "<div> ";         	
                 echo "<h1><a href='index.php'><img src='images/logo.png' alt='' height='80' width='180'></a></h1>";
-                echo "<nav>";
+                echo "<nav >";
                  echo "<ul class='menu'>";
                         if ($onglet == "accueil"){
                             echo "<li class='current'><a href='index.php'>Accueil</a></li>";
