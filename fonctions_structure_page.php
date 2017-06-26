@@ -1,4 +1,8 @@
-<?php 
+<?php
+include_once("connexion/fonction_connexion.php");
+
+
+
 
     function get_header($onglet){
        
@@ -47,9 +51,47 @@
     }
 
     function getInputText($nameLabel, $label, $inputName){
+
         echo "<label name = '$nameLabel'>$label</label>";
-        echo "<input type = 'text' name = '$inputName' required/><br>";
+        echo "<input autocomplete = 'off' type = 'text' name = '$inputName' required/><br>";
     }
+
+    function getInputTextSigleEF($nameLabel, $label, $inputName){
+        //Ouverture d'une nouvelle connexion à la base de données MySQL.
+        $mysqli = connexion();
+        $requete_sigle = $mysqli->query("SELECT DISTINCT sigle FROM element_formation");
+
+        echo "<label name = '$nameLabel'>$label</label>";
+        echo "<input required list = 'liste_sigle' autocomplete = 'off' type = 'text' name = '$inputName' required/><br>";
+        echo "<datalist id='liste_sigle'>";
+        while ($donnees_liste_sigle=mysqli_fetch_array($requete_sigle)){
+        $sigle_suggestion = $donnees_liste_sigle['sigle'];
+
+        echo "<option value='$sigle_suggestion'>$sigle_suggestion</option>";
+        }
+        echo "</datalist>";
+
+    }
+
+function getInputTextSigleLabel($nameLabel, $label, $inputName){
+    //Ouverture d'une nouvelle connexion à la base de données MySQL.
+    $mysqli = connexion();
+    $requete_label = $mysqli->query("SELECT DISTINCT sem_label FROM element_formation");
+
+    echo "<label name = '$nameLabel'>$label</label>";
+    echo "<input required list = 'liste_label' autocomplete = 'off' type = 'text' name = '$inputName' required/><br>";
+    echo "<datalist id='liste_label'>";
+    while ($donnees_liste_label=mysqli_fetch_array($requete_label)){
+        $label_suggestion = $donnees_liste_label['sem_label'];
+
+        echo "<option value='$label_suggestion'>$label_suggestion</option>";
+    }
+    echo "</datalist>";
+
+}
+
+
+
 
     function getSelect($tabOptn, $name, $label){
         echo "<label>$label </label>";

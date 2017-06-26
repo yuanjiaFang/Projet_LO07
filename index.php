@@ -17,9 +17,14 @@ require 'fonctions_structure_page.php';
        ?>
     </header>  
   <!--==============================content================================-->
-    <?php 
-        echo "Hello l'accueil!";
-    ?>
+
+   <div class = "content">
+    <p>
+        Bonjour, bienvennue sur l'application de gestion de cursus d'un étudiant.
+    </p>
+       <img class='icon' src='images/home.jpg'  width='500' height='350'>
+    </div>
+
 <!--==============================footer=================================-->
   <?php 
        getFooter();

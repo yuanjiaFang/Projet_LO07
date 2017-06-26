@@ -12,8 +12,8 @@ function getFormElementFormation($supp = false){
     $tabResultat = ["A" => "A", "B" => "B", "C" => "C", "D" => "D", "E" => "E", "F" => "F", "ABS" => "ABS", "RES" => "RES", "ADM" => "ADM"];
     echo "<div class = 'element_formation'>";
     getInputText("semSeq", "Numéro de semestre à l'UTT ", "semSeq[]");
-    getInputText("semLabel", "Label du semestre ", "semLabel[]");
-    getInputText("sigle", "Sigle de l'élément de formation ", "sigle[]");
+    getInputTextSigleLabel("semLabel", "Label du semestre ", "semLabel[]");
+    getInputTextSigleEF("sigle", "Sigle de l'élément de formation ", "sigle[]");
     getSelect($tabCategorie, "categorie[]", "Catégorie ");
     getSelect($tabAffectation, "affectation[]", "Affectation ");
     getSelect($tabYesNo, "utt[]", "Suivi à l'UTT ");
