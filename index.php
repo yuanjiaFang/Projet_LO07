@@ -1,5 +1,5 @@
 <?php
-require 'fonctions_structure_page.php';	 
+require 'fonctions_structure_page.php';
 ?>
 
 

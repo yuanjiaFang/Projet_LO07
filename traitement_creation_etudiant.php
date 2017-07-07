@@ -17,6 +17,9 @@ if(!($managerEtudiant->existEtu($_POST["num_etu"]))){
     
     $new_etudiant = new Etudiant($_POST["num_etu"], $_POST["nom"], $_POST["prenom"], $_POST["admission"], $_POST["filiere"]);
     $managerEtudiant->addEtu($new_etudiant);
+
+    header('Location:etudiants.php');
+    exit();
 }else{
     echo "Le numéro étudiant fourni existe déjà.";
 }		 
